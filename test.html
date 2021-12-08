@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button>增加</button>
+
+</body>
+<script>
+    // 函数防抖 函数防抖是某一段时间内只执行一次
+    let btn = document.getElementsByTagName("button")[0]
+    let a = 1
+
+    function add() {
+        console.log(++a)
+    }
+
+    function debounce(fun, time) {
+        let timer
+        return function() {
+            console.log(timer)
+            let args = arguments
+            clearTimeout(timer)
+            timer = setTimeout(() => {
+                fun.apply(this, args)
+            }, time);
+        }
+    }
+    // let n = debounce()
+    // n()
+    btn.addEventListener('click', debounce(add, 1000))
+</script>
+
+</html>
