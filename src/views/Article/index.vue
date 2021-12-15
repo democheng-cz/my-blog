@@ -26,10 +26,10 @@
         </div>
 
         <!-- 文章主体 -->
-        <div class=""></div>
+        <div class="content"></div>
       </div>
       <!-- 侧边卡片 -->
-      <ArticleRecommended></ArticleRecommended>
+      <ArticleRecommended height="200px"></ArticleRecommended>
     </div>
   </div>
 </template>
@@ -51,7 +51,7 @@ export default {
     display: flex;
     .article {
       background-color: #fff;
-      height: 300px;
+      height: 600px;
       border-radius: 8px;
       padding: 30px 30px 0 30px;
       width: 800px;
@@ -64,11 +64,11 @@ export default {
         margin-top: 20px;
         display: flex;
         .avatar {
-          width: 38px;
-          height: 38px;
+          width: 45px;
+          height: 45px;
           img {
-            width: 38px;
-            height: 38px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
           }
         }

@@ -44,28 +44,19 @@
         </li>
       </ul>
       <!-- user -->
-      <div class="user">
-        <!-- 用户名以及头像 -->
-        <div class="name">
-          <span>小橙子</span>
-          <span class="avatar">
-            <img src="@/assets/images/artwork.png" alt="" />
-          </span>
-        </div>
-        <!-- 天气 -->
-        <div class="weather">2021-11-28 晴天</div>
-      </div>
+      <div class="user"></div>
     </nav>
   </header>
 </template>
 
 <script type="text/ecmascript-6">
-import { ref } from '@vue/reactivity'
+import { ref } from 'vue'
 export default {
   setup(){
     const tagName = ref("home")
+    // 将字符串转为js对象
     return {
-      tagName
+      tagName,
     }
   }
 
@@ -118,9 +109,6 @@ header {
         }
       }
     }
-  }
-  img {
-    height: 50px;
   }
 }
 </style>

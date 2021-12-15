@@ -1,71 +1,137 @@
 <template>
   <div id="info-container">
     <div class="card">
-      <h1>我的名片</h1>
-      <div class="info">
-        <p>网名：Jerry</p>
-        <p>职业：Web前端工程师</p>
-        <p>电话：XXX</p>
-        <p>Email：XXX</p>
+      <div class="bg">
+        <img
+          src="https://soujiz.com/wp-content/uploads/2021/11/微信图片_20211124202553.jpg"
+          alt=""
+        />
       </div>
-      <div class="link-more">
-        <a class="talk" title="给我留言"><i class="iconfont icon-xinxi"></i></a>
-        <a class="address" title="联系地址"
-          ><i class="iconfont icon-home"></i
-        ></a>
-        <a class="heart" title="关注我"
-          ><i class="iconfont icon-a-lujing350"></i
-        ></a>
+      <!-- 用户信息 -->
+      <div class="avatar_info">
+        <!-- <img :src="user.avatar" alt="" /> -->
+        <div class="wrap" v-if="user">
+          <!-- <img :src="user.avatar" alt="" /> -->
+          <img
+            src="https://soujiz.com/wp-content/uploads/2021/08/avatar.png"
+            alt=""
+          />
+          <span>{{ user.name }}</span>
+        </div>
+        <div class="wrap" v-else>
+          <img
+            src="https://soujiz.com/wp-content/uploads/2021/08/avatar.png"
+            alt=""
+          />
+          <span>Hi, 请登录</span>
+        </div>
+      </div>
+      <!-- 用户信息 -->
+      <!-- 按钮组 -->
+      <div class="btns">
+        <div class="logout" v-if="user" @click="logout">
+          <span>退出登录</span>
+        </div>
+        <div class="login" v-else>
+          <RouterLink to="/login"><p>游客登录</p></RouterLink>
+          <p>qq登录</p>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+import { ref ,inject} from 'vue'
+import {useRouter} from 'vue-router'
 export default {
+  setup(){
+    const user = ref()
+    const reload = inject('reload')
+    if(window.sessionStorage.getItem('user')){
+      user.value = JSON.parse(window.sessionStorage.getItem('user'))
+    }
+    // 退出登录
+    const logout = ()=>{
+      window.sessionStorage.removeItem('user')
+      window.sessionStorage.removeItem("token")
+      // 刷新页面
+      reload()
+    }
+    return {user,logout}
+  }
 }
 </script>
 
 <style scoped lang="less">
 #info-container {
-  margin: 30px 0 0 20px;
-  background: url("../../assets/images/quote-bg.png") no-repeat top right;
+  margin: 30px 0 0 30px;
+  position: relative;
   border-radius: 8px;
-  padding-left: 10px;
   box-sizing: border-box;
-  width: 350px;
-  height: 250px;
+  width: 310px;
+  // height: 250px;
   color: #999;
   background-color: #fff;
-  box-shadow: -5px 5px 20px #ccc;
-  h1 {
-    margin-top: 20px;
-    font-size: 20px;
-  }
-  .info {
-    margin-left: 40px;
-    p {
-      line-height: 27px;
-      margin: 0;
+  .card {
+    width: 310px;
+    .bg {
+      img {
+        width: 310px;
+        height: 120px;
+      }
     }
-  }
-  .link-more {
-    width: 100%;
-    display: flex;
-    justify-content: space-evenly;
-    margin-top: 30px;
-    a {
-      width: 50px;
-      height: 50px;
-      justify-content: space-between;
-      color: #ccc;
-      border-radius: 50%;
-      box-shadow: 20px 20px 20px rgba(255, 255, 255, 0.3);
-      text-align: center;
-      line-height: 50px;
-      box-shadow: -5px 5px 10px #ccc;
-      .iconfont {
-        font-size: 25px;
+    .avatar_info {
+      position: absolute;
+      top: 80px;
+      left: 110px;
+      .wrap {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        img {
+          width: 80px;
+          height: 80px;
+          border-radius: 50%;
+          margin-bottom: 30px;
+        }
+      }
+    }
+    .btns {
+      position: absolute;
+      left: 45px;
+      top: 240px;
+      display: flex;
+      .login {
+        display: flex;
+        p {
+          line-height: 35px;
+          cursor: pointer;
+          width: 105px;
+          height: 35px;
+          background: linear-gradient(135deg, #59c3fb 10%, #268df7 100%);
+          border-radius: 6px;
+          text-align: center;
+          color: #fff;
+          margin-right: 10px;
+        }
+        :nth-child(2) {
+          background: linear-gradient(135deg, #f59f54 10%, #ff6922 100%);
+        }
+      }
+      .logout {
+        width: 105px;
+        height: 35px;
+        background: linear-gradient(135deg, #f59f54 10%, #ff6922 100%);
+        border-radius: 6px;
+        text-align: center;
+        color: #fff;
+        margin-left: 50px;
+        span {
+          line-height: 35px;
+          cursor: pointer;
+        }
       }
     }
   }

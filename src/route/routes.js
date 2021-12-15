@@ -1,6 +1,7 @@
 const Layout = () => import("../views/Layout")
 const Home = () => import("../views/Home")
 const Article = () => import("../views/Article")
+const Login = () => import("../views/Login")
 
 const routes = [
   // 一级路由
@@ -20,6 +21,11 @@ const routes = [
         component: Article,
       },
     ],
+  },
+  {
+    name: "login",
+    path: "/login",
+    component: Login,
   },
 ]
 export default routes

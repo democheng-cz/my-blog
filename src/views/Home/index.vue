@@ -10,6 +10,7 @@
 
   <!-- 侧边栏 卡片 -->
   <div class="card_list">
+    <TimeCard></TimeCard>
     <ImgCard>今日美图</ImgCard>
     <ArticleRecommended>精选文章</ArticleRecommended>
     <PoemRecommend>每日推荐</PoemRecommend>
@@ -23,9 +24,10 @@ import Article from './Article'
 import ImgCard from './ImgCard'
 import ArticleRecommended from './ArticleRecommended'
 import PoemRecommend from './PoemRecommend'
+import TimeCard from '@/components/Time'
 
 export default {
-  components:{Banners,InfoCard,Article,ImgCard,ArticleRecommended,PoemRecommend}
+  components:{Banners,InfoCard,Article,ImgCard,ArticleRecommended,PoemRecommend,TimeCard}
 }
 </script>
 

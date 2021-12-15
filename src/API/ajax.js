@@ -10,11 +10,16 @@ const instance = axios.create({
 instance.interceptors.request.use(
   // 请求成功的回调
   (config) => {
+    let token = window.sessionStorage.getItem("token")
+    if (token) {
+      config.headers.Authorization = "Bearer " + token
+    }
+
     return config
   },
   // 请求失败的回调
   (err) => {
-    return Promise.reject("err")
+    return Promise.reject(err)
   }
 )
 
@@ -22,11 +27,11 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   // 响应成功的回调
   (res) => {
-    return res
+    return res.data
   },
   // 失败的回调
   (err) => {
-    return Promise.reject("err")
+    return Promise.reject(err)
   }
 )
 

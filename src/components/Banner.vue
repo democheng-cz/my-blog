@@ -14,11 +14,11 @@
     <Transition name="fade">
       <div class="control" v-if="show">
         <!-- 上一页 -->
-        <div class="pre" @click="toggle(-1)">
+        <div class="pre" @click="toggle(-1, 1000)">
           <i class="iconfont icon-arrow1"></i>
         </div>
         <!-- 下一页 -->
-        <div class="next" @click="toggle(1)">
+        <div class="next" @click="toggle(1, 1000)">
           <i class="iconfont icon-arrow"></i>
         </div>
       </div>
@@ -44,18 +44,29 @@ export default {
     const imgIndex = ref(0)
     const imgs = ref([])
     const imgRef = ref(null)
-    const show = ref(true)
+    const show = ref(false)
     const timer1 = ref()
+    let last = 0
     const width = props.width.split("p")[0]
     imgs.value = ["http://html.cdsenyang.cn/1/demo2548/images/3.jpg","http://html.cdsenyang.cn/1/demo2548/images/1.jpg","http://html.cdsenyang.cn/1/demo2548/images/2.jpg"]
 
-    // 函数防抖
-    const toggle = (step)=>{
+    const toggle = (step,delay)=>{
+
+      // 函数防抖 : 只会执行最后一次,在定时器规定时间后执行
+      // return function(){
+      //   clearTimeout(timer1.value)
+      //   timer1.value = setTimeout(() => {
+      //     dome(step)
+      //   }, 500);
+      // }()
+
+      // 函数节流 : 在一定时间内执行一次,可以是第一次,也可以是最后一次
       return function(){
-        clearTimeout(timer1.value)
-        timer1.value = setTimeout(() => {
+        let time = Date.now()
+        if(time-last>delay){
           dome(step)
-        }, 500);
+          last = time
+        }
       }()
     }
 
@@ -65,7 +76,7 @@ export default {
       let newIndex = imgIndex.value + step
       // console.log(newIndex* width);
       if(imgRef.value.style.transition){
-        imgRef.value.style.transition = "0.5s"
+        imgRef.value.style.transition = "1s"
       }
       if(newIndex>imgs.value.length -1){
         let timer
@@ -79,7 +90,7 @@ export default {
           imgRef.value.style.transition = "none"
           imgRef.value.style.left = 0
           imgs.value.pop()
-        }, 500);
+        }, 1000);
       }else if(newIndex<0){
         let timer
         imgIndex.value = imgs.value.length-1
@@ -92,7 +103,7 @@ export default {
           imgRef.value.style.left = -(imgs.value.length-2) * width +"px"
           imgRef.value.style.transition = "none"
           imgs.value.shift()
-        }, 500);
+        }, 1000);
       }else{
         imgIndex.value = newIndex
         imgRef.value.style.left = -imgIndex.value * width +"px"
@@ -141,7 +152,7 @@ export default {
     width: 100%;
     position: relative;
     left: 0;
-    transition: all 0.5s;
+    transition: all 1s;
     display: flex;
     img {
       background-size: cover;

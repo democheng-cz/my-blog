@@ -26,8 +26,7 @@ export default {
     const poem = ref(null)
     // 获取诗句
     getPoem().then((result)=>{
-      console.log(result)
-      poem.value = result.data.result.poem
+      poem.value = result.data.poem
       // console.log(poem.value)
     })
     return {

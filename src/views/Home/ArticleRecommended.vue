@@ -1,23 +1,11 @@
 <template>
-  <div class="card_container">
+  <div class="card_container" :style="{ height }">
     <RecommendHeader weight="600">文章精选</RecommendHeader>
     <div class="container">
       <div class="item">
         <span class="title">[慢生活]</span>
         <span class="ellipsis"
           >有一种思念，是淡淡的幸福幸福幸福幸福幸福,一个心情一</span
-        >
-      </div>
-      <div class="item">
-        <span class="title">[慢生活]</span>
-        <span class="ellipsis"
-          >有一种思念，是淡淡的幸福,一个心情一11111111</span
-        >
-      </div>
-      <div class="item">
-        <span class="title">[慢生活]</span>
-        <span class="ellipsis"
-          >有一种思念，是淡淡的幸福,一个心情一11111111</span
         >
       </div>
       <div class="item">
@@ -39,7 +27,13 @@
 <script type="text/ecmascript-6">
 import RecommendHeader from '../../components/RecommendHeader'
 export default {
-  components:{RecommendHeader}
+  components:{RecommendHeader},
+  props:{
+    height:{
+      type:String,
+      default:null
+    }
+  }
 }
 </script>
 
