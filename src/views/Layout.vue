@@ -1,36 +1,37 @@
 <template>
-  <!-- 头部 -->
-  <Header></Header>
-
-  <!-- 吸顶头部 -->
-  <HeaderSticky></HeaderSticky>
-
-  <!-- 主要内容 -->
-  <main>
-    <router-view></router-view>
-  </main>
-
-  <!-- 底部 -->
-  <footer>
-    <Footer></Footer>
-  </footer>
+	<div class="layout">
+		<top-header />
+		<div class="main">
+			<div class="content">
+				<router-view></router-view>
+			</div>
+			<div class="aside">
+				<aside-tab></aside-tab>
+			</div>
+		</div>
+		<Footer />
+	</div>
 </template>
 
-<script type="text/ecmascript-6">
-import Header from "@/components/Header"
-import HeaderSticky from '@/components/HeaderSticky'
-import Home from './Home/index.vue'
-import Footer from '@/components/Footer'
-  export default {
-    components:{Header,Home,Footer,HeaderSticky}
-  }
+<script lang="ts" setup>
+import TopHeader from "@/components/top-header.vue"
+import asideTab from "@/components/aside-tab.vue"
+import Footer from "@/components/footer.vue"
 </script>
 
 <style scoped lang="less">
-main {
-  width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
+.layout {
+	width: 100%;
+	height: 100%;
+	.main {
+		width: 1350px;
+		margin: 0 auto;
+		margin-top: 90px;
+		display: flex;
+		box-sizing: border-box;
+		.aside {
+			flex: 1;
+		}
+	}
 }
 </style>

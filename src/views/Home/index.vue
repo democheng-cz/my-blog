@@ -1,40 +1,24 @@
 <template>
-  <!-- 轮播图 -->
-  <Banners></Banners>
-
-  <!-- 个人信息卡片 -->
-  <InfoCard></InfoCard>
-
-  <!-- 文章列表展示 -->
-  <Article>最新文章</Article>
-
-  <!-- 侧边栏 卡片 -->
-  <div class="card_list">
-    <TimeCard></TimeCard>
-    <ImgCard>今日美图</ImgCard>
-    <ArticleRecommended>精选文章</ArticleRecommended>
-    <PoemRecommend>每日推荐</PoemRecommend>
-  </div>
+	<div class="home-container">
+		<template v-for="i in 10" :key="i">
+			<list-item-v1></list-item-v1>
+		</template>
+	</div>
 </template>
 
-<script type="text/ecmascript-6">
-import Banners from './Banners'
-import InfoCard from './InfoCard'
-import Article from './Article'
-import ImgCard from './ImgCard'
-import ArticleRecommended from './ArticleRecommended'
-import PoemRecommend from './PoemRecommend'
-import TimeCard from '@/components/Time'
+<script lang="ts" setup>
+import listItemV1 from "@/components/list-item-v1.vue"
+import { useHomeStore } from "@/store/home"
 
-export default {
-  components:{Banners,InfoCard,Article,ImgCard,ArticleRecommended,PoemRecommend,TimeCard}
-}
+const { getBlogList } = useHomeStore()
+getBlogList()
 </script>
 
 <style scoped lang="less">
-#main {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
+.home-container {
+	width: 1040px;
+	box-sizing: border-box;
+	padding: 10px 20px;
+	background-color: #fff;
 }
 </style>

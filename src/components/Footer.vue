@@ -1,29 +1,13 @@
 <template>
-  <footer>
-    <div class="foot-bottom">
-      <p>Design by 啥都不会的小橙</p>
-    </div>
-  </footer>
+	<div class="footer-container"></div>
 </template>
 
-<script type="text/ecmascript-6">
-export default {
-  name:'Footer'
-}
-</script>
+<script lang="ts" setup></script>
 
 <style scoped lang="less">
-footer {
-  width: 100%;
-  background-color: #fff;
-  margin-top: 20px;
-  .foot-bottom p {
-    padding: 10px 0px 0 0;
-    text-align: center;
-    line-height: 100px;
-    a {
-      color: #000;
-    }
-  }
+.footer-container {
+	width: 100%;
+	height: 100px;
+	background-color: skyblue;
 }
 </style>
