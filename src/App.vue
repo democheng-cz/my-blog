@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Layout from "./views/layout.vue"
+import Layout from "./views/Layout.vue"
 </script>
 
 <template>
@@ -8,4 +8,9 @@ import Layout from "./views/layout.vue"
 	</div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.app {
+	width: 100%;
+	height: 100%;
+}
+</style>

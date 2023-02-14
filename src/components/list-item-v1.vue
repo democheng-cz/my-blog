@@ -1,32 +1,38 @@
 <template>
 	<div class="list-item-v1">
-		<div class="left">
-			<img class="cover" src="@/assets/images/猫和老鼠.png" alt="" />
+		<div class="left" v-if="item.cover">
+			<img class="cover" :src="item.cover" alt="" />
 		</div>
 		<div class="right">
-			<div class="title">vue3切换风格</div>
+			<div class="title">{{ item.title }}</div>
 			<div class="desc">
-				我们想要实现风格切换，基本思路就是定制一套基本的样式，然后不同的风格，我们使用不同的颜色，通过最外层添加clas选择器来进行覆盖，达到切换风格效果。
-				我们想要实现风格切换，基本思路就是定制一套基本的样式，然后不同的风格，我们使用不同的颜色，通过最外层添加clas选择器来进行覆盖，达到切换风格效果。
-				我们想要实现风格切换，基本思路就是定制一套基本的样式，然后不同的风格，我们使用不同的颜色，通过最外层添加clas选择器来进行覆盖，达到切换风格效果。
-				我们想要实现风格切换，基本思路就是定制一套基本的样式，然后不同的风格，我们使用不同的颜色，通过最外层添加clas选择器来进行覆盖，达到切换风格效果。
+				{{ item.summary }}
 			</div>
 			<div class="info">
-				<div class="time">2023-02-10 03:55:23</div>
+				<div class="time">{{ item.lastUpdateTime }}</div>
 				<div class="user">
 					<span>作者:</span>
-					<a class="name" href="#">democheng</a>
+					<a class="name" href="#">{{ item.nickname }}</a>
 				</div>
 				<div class="category">
 					<span>分类专栏:</span>
-					<a href="#" class="name">Vue3</a>
+					<a href="#" class="name">{{ item.categoryName }}</a>
 				</div>
 			</div>
 		</div>
 	</div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+const props = withDefaults(
+	defineProps<{
+		item: any
+	}>(),
+	{
+		item: () => ({}),
+	}
+)
+</script>
 
 <style scoped lang="less">
 @import "@/assets/css/variable.less";
@@ -52,6 +58,7 @@
 			color: @first-color;
 			font-size: 18px;
 			// margin: 5px 0;
+			cursor: pointer;
 		}
 		.desc {
 			font-size: 14px;

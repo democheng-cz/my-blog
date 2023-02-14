@@ -1,8 +1,15 @@
 import request from "./request"
 
 // 获取博客列表
-export const reqGetBlogList = () =>
-	request.get({ url: "/api/view/loadBlogList", params: { pageSize: 10 } })
+export const reqGetBlogList = (
+	pageNo?: number,
+	categoryId?: null | string,
+	pageSize = 10
+) =>
+	request.get({
+		url: "/api/view/loadBlogList",
+		params: { pageSize, pageNo, categoryId },
+	})
 
 // 获取专题分类
 export const reqGetCategory = () => {
