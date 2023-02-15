@@ -1,6 +1,9 @@
 <template>
 	<div class="category-container">
-		<template v-for="item in categoryList" :key="item.categoryId">
+		<template
+			v-for="item in categoryList || DcCache.getCache('categoryList')"
+			:key="item.categoryId"
+		>
 			<category-item :item="item"></category-item>
 		</template>
 	</div>
@@ -10,8 +13,12 @@
 import categoryItem from "@/components/category-item.vue"
 import { useHomeStore } from "@/store/home"
 import { storeToRefs } from "pinia"
+import DcCache from "@/utils/storage"
 
 const { categoryList } = storeToRefs(useHomeStore())
+categoryList.value.length || useHomeStore().getCategoryList()
+console.log(DcCache.getCache("categoryList"))
+// console.log(categoryList.value)
 </script>
 
 <style scoped lang="less">

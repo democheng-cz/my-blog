@@ -16,13 +16,12 @@ import { useBlogDetail } from "@/store/blogDetail"
 // import RM from  "../../assets/read.md"
 const rm = import.meta.glob("../../assets/read.md", { as: "raw" })
 const text = ref<string>("")
-async function foo() {
-	const res = await rm["../../assets/read.md"]()
-	console.log(typeof res)
-	text.value = res
-	console.log(text)
-}
-foo()
+// async function foo() {
+// 	const res = await rm["../../assets/read.md"]()
+// 	text.value = res
+// 	// console.log(text)
+// }
+// foo()
 
 const { blogDetail } = storeToRefs(useBlogDetail())
 // const html = ref(

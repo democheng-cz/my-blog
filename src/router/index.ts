@@ -5,4 +5,5 @@ const router = createRouter({
 	routes,
 })
 
+router.beforeEach(to => {})
 export default router

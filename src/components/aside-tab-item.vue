@@ -4,7 +4,7 @@
 			<img src="@/assets/images/猫和老鼠.png" alt="" />
 			<div class="name">{{ item.categoryName }}</div>
 		</div>
-		<div class="right">{{ item.blogCount }}</div>
+		<div class="right">{{ item.blogCount }}篇</div>
 	</div>
 </template>
 

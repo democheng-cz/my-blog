@@ -1,6 +1,6 @@
 <template>
-	<div class="category-item">
-		<div class="wrap">
+	<div class="category-item" :style="{ width: width }">
+		<div class="wrap" :style="{ border: hasBorder ? '1px solid #ddd' : 0 }">
 			<div class="left">
 				<img src="@/assets/images/猫和老鼠.png" alt="" />
 			</div>
@@ -19,15 +19,23 @@
 </template>
 
 <script lang="ts" setup>
+import { ref } from "vue"
 import { useRouter } from "vue-router"
+import { useHomeStore } from "@/store/home"
 
 const router = useRouter()
-
-withDefaults(defineProps<{ item: any }>(), {
-	item: () => ({}),
-})
+const props = withDefaults(
+	defineProps<{ item: any; hasBorder?: boolean; width?: string }>(),
+	{
+		item: () => ({}),
+		hasBorder: true,
+		width: "25%",
+	}
+)
 
 const getCategoryListById = function (id: number) {
+	//  修改currentCategory
+	useHomeStore().changeCurrentCategory(props.item)
 	router.push(`/category/${id}`)
 }
 </script>

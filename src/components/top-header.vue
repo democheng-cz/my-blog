@@ -26,15 +26,16 @@ const router = useRouter()
 const list = [
 	{ name: "博客", id: 1, path: "/home" },
 	{ name: "分类专栏", id: 2, path: "/category" },
-	{ name: "专题", id: 3, path: "topic" },
-	{ name: "成员", id: 4, path: "user" },
-	{ name: "留言板", id: 5, path: "message" },
+	{ name: "专题", id: 3, path: "/topic" },
+	{ name: "成员", id: 4, path: "/user" },
+	{ name: "留言板", id: 5, path: "/message" },
 ]
 
 const activeIndex = ref(1)
 const changeIndex = (index: number, path: string) => {
 	activeIndex.value = index
 
+	console.log(path)
 	// 跳转路由
 	router.push(path)
 }

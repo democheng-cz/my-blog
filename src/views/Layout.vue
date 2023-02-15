@@ -9,7 +9,9 @@
 				class="aside"
 				v-if="route.path === '/home' || /^\/category\/\d+/.test(route.path)"
 			>
-				<aside-tab :data="asideData"></aside-tab>
+				<aside-tab
+					:data="asideData.length ? asideData : DcCache.getCache('asideData')"
+				></aside-tab>
 			</div>
 		</div>
 		<div class="footer"><Footer /></div>
@@ -20,6 +22,7 @@
 import { useRoute } from "vue-router"
 import { storeToRefs } from "pinia"
 import { useHomeStore } from "@/store/home"
+import DcCache from "@/utils/storage"
 
 import TopHeader from "@/components/top-header.vue"
 import asideTab from "@/components/aside-tab.vue"

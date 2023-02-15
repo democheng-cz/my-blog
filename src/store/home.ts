@@ -1,9 +1,10 @@
 import { defineStore } from "pinia"
 import { ref } from "vue"
 
+import dcCache from "@/utils/storage"
 import {
 	reqGetBlogList,
-	reqGetSysInfo,
+	// reqGetSysInfo,
 	reqGetCategory,
 	reqGetTopicList,
 } from "@/service/index"
@@ -23,26 +24,49 @@ export const useHomeStore = defineStore("homeStore", () => {
 
 	// 专题列表
 	const topicList = ref<Array<any>>([])
+
+	// 当前选中的专栏分类
+	const currentCategory: any = ref(null)
+
+	// 当前路由路径
+	const currentPath = ref<string>("")
+
 	// 获取博客列表
 	const getBlogList = async function (
-		pageNo?: number,
-		// pageSize: number,
+		// pageNo?: number,
 		categoryId?: null | string
 	) {
-		const res: any = await reqGetBlogList(pageNo, categoryId)
+		const res: any = await reqGetBlogList(pageNo.value, categoryId)
 		blogList.value = new Array(10).fill(res.list[0])
 		// blogList.value = res.list
 		blogTotal.value = res.totalCount
+		dcCache.setCache("blogList", blogList.value)
+		dcCache.setCache("blogTotal", blogTotal.value)
+	}
 
-		// 获取专栏分类列表
+	// 获取专栏分类列表
+	const getCategoryList = async function () {
 		const resCategory: any = await reqGetCategory()
 		// console.log(resCategory)
 		categoryList.value = new Array(10).fill(resCategory[0])
+		getAllAsideData(categoryList.value)
+		dcCache.setCache("categoryList", categoryList.value)
+		// dcCache.setCache("blogTotal", blogTotal.value)
+	}
 
+	// 获取专题列表
+	const getTopicList = async function () {
 		// 获取专题列表
 		const resTopic: any = await reqGetTopicList()
-		console.log(resTopic)
+		// console.log(resTopic)
 		topicList.value = new Array(10).fill(resTopic.list[0])
+	}
+
+	// 获取所有数据
+	const getAllData = async function () {
+		await getBlogList()
+		await getCategoryList()
+		await getTopicList()
 		// asideData
 		getAllAsideData(categoryList.value, topicList.value)
 	}
@@ -52,24 +76,36 @@ export const useHomeStore = defineStore("homeStore", () => {
 		topicList?: any,
 		userList?: any
 	) {
+		// console.log("first")
+		asideData.value = []
 		if (categoryList) {
-			asideData.value.push({ title: "专栏分类", data: categoryList })
-			console.log("first")
-			console.log(topicList)
+			asideData.value.push({
+				title: "专栏分类",
+				data: categoryList.slice(0, 5),
+			})
 		}
 		if (userList) {
-			asideData.value.push({ title: "博客成员", data: userList })
+			asideData.value.push({ title: "博客成员", data: userList.slice(0, 5) })
 		}
 		if (topicList) {
-			console.log("first333")
-			asideData.value.push({ title: "专题", data: topicList })
+			asideData.value.push({ title: "专题", data: topicList.slice(0, 5) })
 		}
+		dcCache.setCache("asideData", asideData.value)
 	}
 
 	// 修改当前页数
 	const changePageNo = function (newPage: number) {
-		// pageNo.value = newPage
-		getBlogList(newPage)
+		pageNo.value = newPage
+		getBlogList()
+	}
+
+	// 修改currentCategory
+	const changeCurrentCategory = async function (item: any) {
+		currentCategory.value = item
+		// console.log(item)
+		// console.log(item.categoryId)
+		dcCache.setCache("currentCategory", currentCategory.value)
+		await getBlogList(item.categoryId)
 	}
 
 	return {
@@ -81,5 +117,11 @@ export const useHomeStore = defineStore("homeStore", () => {
 		topicList,
 		getAllAsideData,
 		asideData,
+		getCategoryList,
+		getTopicList,
+		getAllData,
+		changeCurrentCategory,
+		currentCategory,
+		currentPath,
 	}
 })

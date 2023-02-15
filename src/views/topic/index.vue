@@ -11,6 +11,7 @@ import categoryItem from "@/components/category-item.vue"
 import { useHomeStore } from "@/store/home"
 import { storeToRefs } from "pinia"
 const { topicList } = storeToRefs(useHomeStore())
+topicList.value.length || useHomeStore().getTopicList()
 </script>
 
 <style scoped lang="less">
