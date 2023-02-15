@@ -5,8 +5,11 @@
 			<div class="content">
 				<router-view></router-view>
 			</div>
-			<div class="aside">
-				<aside-tab></aside-tab>
+			<div
+				class="aside"
+				v-if="route.path === '/home' || /^\/category\/\d+/.test(route.path)"
+			>
+				<aside-tab :data="asideData"></aside-tab>
 			</div>
 		</div>
 		<div class="footer"><Footer /></div>
@@ -14,9 +17,21 @@
 </template>
 
 <script lang="ts" setup>
+import { useRoute } from "vue-router"
+import { storeToRefs } from "pinia"
+import { useHomeStore } from "@/store/home"
+
 import TopHeader from "@/components/top-header.vue"
 import asideTab from "@/components/aside-tab.vue"
 import Footer from "@/components/Footer.vue"
+
+const { asideData } = storeToRefs(useHomeStore())
+const route = useRoute()
+
+// const rex = /^\/category\/\d+/
+// console.log(rex.test("/home"))
+// console.log(rex.test("/category/1"))
+// console.log(route.path)
 </script>
 
 <style scoped lang="less">
@@ -37,9 +52,15 @@ import Footer from "@/components/Footer.vue"
 		display: flex;
 		// box-sizing: border-box;
 		flex: 1;
+		.content {
+			// width: 100%;
+			// width: 1040px;
+			flex: 1;
+		}
 		.aside {
 			// height: 100%;
-			flex: 1;
+			// flex: 1;
+			width: 310px;
 		}
 	}
 	.footer {

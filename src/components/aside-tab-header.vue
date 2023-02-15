@@ -1,11 +1,13 @@
 <template>
 	<div class="header">
-		<div class="name">分类专栏</div>
+		<div class="name">{{ title }}</div>
 		<div class="more">更多>></div>
 	</div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+defineProps<{ title: string }>()
+</script>
 
 <style scoped lang="less">
 @import "@/assets/css/variable.less";

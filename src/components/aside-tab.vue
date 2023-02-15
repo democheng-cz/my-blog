@@ -1,8 +1,10 @@
 <template>
 	<div class="aside-tab-container">
-		<template v-for="i in 3" :key="i">
-			<aside-tab-header />
-			<aside-tab-item></aside-tab-item>
+		<template v-for="item in data" :key="item.title">
+			<aside-tab-header :title="item.title" />
+			<template v-for="i in item.data" :key="i.categoryId">
+				<aside-tab-item :item="i"></aside-tab-item>
+			</template>
 		</template>
 	</div>
 </template>
@@ -10,6 +12,13 @@
 <script lang="ts" setup>
 import asideTabItem from "./aside-tab-item.vue"
 import asideTabHeader from "./aside-tab-header.vue"
+
+interface PropsType {
+	data: any[]
+}
+withDefaults(defineProps<PropsType>(), {
+	data: () => [],
+})
 </script>
 
 <style scoped lang="less">

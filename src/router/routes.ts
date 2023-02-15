@@ -20,6 +20,16 @@ const routes: RouteRecordRaw[] = [
 		path: "/message",
 		component: () => import("@/views/message/index.vue"),
 	},
+	{
+		path: "/blog/:id",
+		component: () => import("@/views/blog-detail/index.vue"),
+	},
+	{
+		path: "/category/:id",
+		component: () => import("@/views/category/category-list.vue"),
+	},
 ]
+
+console.log(routes)
 
 export default routes

@@ -39,3 +39,8 @@ export const reqGetTopicList = () => {
 export const reqGetSysInfo = () => {
 	return request.get({ url: "/api/view/getSysInfo" })
 }
+
+// 获取博客详情
+export const reqBlogDetail = (blogId: string) => {
+	return request.get({ url: "/api/view/getBlogDetail", params: { blogId } })
+}

@@ -4,7 +4,9 @@
 			<img class="cover" :src="item.cover" alt="" />
 		</div>
 		<div class="right">
-			<div class="title">{{ item.title }}</div>
+			<div class="title" @click="getBlogDetail(item.blogId)">
+				{{ item.title }}
+			</div>
 			<div class="desc">
 				{{ item.summary }}
 			</div>
@@ -32,6 +34,12 @@ const props = withDefaults(
 		item: () => ({}),
 	}
 )
+
+const emit = defineEmits(["handleGetBlogDetail"])
+
+const getBlogDetail = function (blogId: string) {
+	emit("handleGetBlogDetail", blogId)
+}
 </script>
 
 <style scoped lang="less">

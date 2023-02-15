@@ -2,13 +2,22 @@
 	<div class="aside-tab-item">
 		<div class="left">
 			<img src="@/assets/images/猫和老鼠.png" alt="" />
-			<div class="name">DC-BLOG</div>
+			<div class="name">{{ item.categoryName }}</div>
 		</div>
-		<div class="right">1篇</div>
+		<div class="right">{{ item.blogCount }}</div>
 	</div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+withDefaults(
+	defineProps<{
+		item: any
+	}>(),
+	{
+		item: () => ({}),
+	}
+)
+</script>
 
 <style scoped lang="less">
 @import "@/assets/css/variable.less";

@@ -10,6 +10,7 @@ declare module '@vue/runtime-core' {
     AsideTab: typeof import('./src/components/aside-tab.vue')['default']
     AsideTabHeader: typeof import('./src/components/aside-tab-header.vue')['default']
     AsideTabItem: typeof import('./src/components/aside-tab-item.vue')['default']
+    CategoryItem: typeof import('./src/components/category-item.vue')['default']
     ElPagination: typeof import('element-plus/es')['ElPagination']
     Footer: typeof import('./src/components/Footer.vue')['default']
     ListItemV1: typeof import('./src/components/list-item-v1.vue')['default']
