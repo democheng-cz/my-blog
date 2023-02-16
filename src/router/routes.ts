@@ -5,6 +5,10 @@ const routes: RouteRecordRaw[] = [
 		component: () => import("@/views/home/index.vue"),
 	},
 	{
+		path: "/",
+		redirect: "/home",
+	},
+	{
 		path: "/category",
 		component: () => import("@/views/category/index.vue"),
 	},
@@ -27,6 +31,10 @@ const routes: RouteRecordRaw[] = [
 	{
 		path: "/category/:id",
 		component: () => import("@/views/category/category-list.vue"),
+	},
+	{
+		path: "/topic/:id",
+		component: () => import("@/views/topic-detail/index.vue"),
 	},
 ]
 

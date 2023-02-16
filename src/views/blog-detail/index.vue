@@ -1,6 +1,8 @@
 <template>
 	<div class="blog-detail-container">
-		<v-md-preview :text="blogDetail.content" mode="preview"></v-md-preview>
+		<template v-if="blogDetail">
+			<v-md-preview :text="blogDetail.content" mode="preview"></v-md-preview>
+		</template>
 		<!-- <v-md-preview
 			:text="blogDetail.markdownContent"
 			mode="preview"
@@ -10,9 +12,10 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "vue"
+import { ref } from "vue"
 import { storeToRefs } from "pinia"
 import { useBlogDetail } from "@/store/blogDetail"
+import DcCache from "@/utils/storage"
 // import RM from  "../../assets/read.md"
 const rm = import.meta.glob("../../assets/read.md", { as: "raw" })
 const text = ref<string>("")
@@ -24,9 +27,7 @@ const text = ref<string>("")
 // foo()
 
 const { blogDetail } = storeToRefs(useBlogDetail())
-// const html = ref(
-// 	'<div data-v-md-line="1"><h1 align="center">Markdown Editor built on Vue</h1>'
-// )
+blogDetail.value = blogDetail.value || DcCache.getCache("currentBlogDetail")
 </script>
 
 <style scoped lang="less">

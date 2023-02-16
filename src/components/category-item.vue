@@ -25,18 +25,30 @@ import { useHomeStore } from "@/store/home"
 
 const router = useRouter()
 const props = withDefaults(
-	defineProps<{ item: any; hasBorder?: boolean; width?: string }>(),
+	defineProps<{
+		item: any
+		hasBorder?: boolean
+		width?: string
+		flag?: string
+	}>(),
 	{
 		item: () => ({}),
 		hasBorder: true,
 		width: "25%",
+		flag: "category",
 	}
 )
 
 const getCategoryListById = function (id: number) {
 	//  修改currentCategory
-	useHomeStore().changeCurrentCategory(props.item)
-	router.push(`/category/${id}`)
+	if (props.flag === "category") {
+		useHomeStore().changeCurrentCategory(props.item)
+	}
+	if (props.flag === "topic") {
+		useHomeStore().getTopicDetail(id)
+	}
+	router.push(`/${props.flag}/${id}`)
+	console.log(id)
 }
 </script>
 

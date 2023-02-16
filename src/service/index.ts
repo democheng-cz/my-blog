@@ -19,6 +19,14 @@ export const reqGetCategory = () => {
 	})
 }
 
+// 获取专题详情
+export const reqGetTopicDetail = (categoryId: number) => {
+	return request.get({
+		url: "/api/view/getSpecialDetail",
+		params: { categoryId },
+	})
+}
+
 //获取博客成员
 export const reqGetUsers = () => {
 	return request.get({

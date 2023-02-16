@@ -1,6 +1,7 @@
 import { defineStore } from "pinia"
 import { ref } from "vue"
 import { reqBlogDetail } from "@/service"
+import DcCache from "@/utils/storage"
 export const useBlogDetail = defineStore("blogDetail", function () {
 	// 博客详情
 	const blogDetail: any = ref(null)
@@ -10,6 +11,7 @@ export const useBlogDetail = defineStore("blogDetail", function () {
 		const res: any = await reqBlogDetail(id)
 		// console.log(res)
 		blogDetail.value = res
+		DcCache.setCache("currentBlogDetail", blogDetail.value)
 	}
 
 	return {

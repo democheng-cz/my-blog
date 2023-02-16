@@ -1,7 +1,7 @@
 <template>
 	<div class="top-container">
 		<template v-for="item in topicList" :key="item.categoryId">
-			<category-item :item="item"></category-item>
+			<category-item :item="item" flag="topic"></category-item>
 		</template>
 	</div>
 </template>

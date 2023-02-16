@@ -40,17 +40,17 @@ const route = useRoute()
 <style scoped lang="less">
 .layout {
 	width: 100%;
-	height: auto;
+	// height: 100%;
 	min-height: 87%;
 	// box-sizing: border-box;
 	display: flex;
 	flex-direction: column;
 	padding-top: 90px;
-
+	// overflow: hidden;
 	.main {
 		width: 1350px;
 		// height: 100%;
-		// min-height: 70%;
+		min-height: 50%;
 		margin: 0 auto;
 		display: flex;
 		// box-sizing: border-box;
@@ -62,15 +62,17 @@ const route = useRoute()
 		}
 		.aside {
 			// height: 100%;
-			// flex: 1;
 			width: 310px;
 		}
 	}
 	.footer {
 		width: 100%;
 		height: 60px;
-		margin-top: 20px;
-		// margin-bottom: 100px;
+		position: relative;
+		bottom: 0;
+		left: 0;
+		// margin-top: 20px;
+		// margin-bottom: -108px;
 	}
 }
 </style>

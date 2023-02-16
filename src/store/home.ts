@@ -1,17 +1,18 @@
 import { defineStore } from "pinia"
 import { ref } from "vue"
-
+import type { BlogItemType, CategoryItemType, TopicItemType } from "./types"
 import dcCache from "@/utils/storage"
 import {
 	reqGetBlogList,
-	// reqGetSysInfo,
 	reqGetCategory,
 	reqGetTopicList,
+	reqGetTopicDetail,
 } from "@/service/index"
+
 export const useHomeStore = defineStore("homeStore", () => {
 	// 博客列表数据
-	const blogList = ref<Array<any>>([])
-	// 博客列表总数据
+	const blogList = ref<Array<BlogItemType>>([])
+	// 博客列表总数量
 	const blogTotal = ref<number>(0)
 
 	const pageNo = ref<number>(1)
@@ -20,16 +21,18 @@ export const useHomeStore = defineStore("homeStore", () => {
 	const asideData = ref<Array<any>>([])
 
 	// 专栏分类列表
-	const categoryList = ref<Array<any>>([])
+	const categoryList = ref<Array<CategoryItemType>>([])
 
 	// 专题列表
-	const topicList = ref<Array<any>>([])
+	const topicList = ref<Array<TopicItemType>>([])
 
 	// 当前选中的专栏分类
 	const currentCategory: any = ref(null)
 
 	// 当前路由路径
 	const currentPath = ref<string>("")
+
+	const currentTopicDetail = ref<any>([])
 
 	// 获取博客列表
 	const getBlogList = async function (
@@ -108,6 +111,18 @@ export const useHomeStore = defineStore("homeStore", () => {
 		await getBlogList(item.categoryId)
 	}
 
+	// 保存并修改currentPath
+	const changeCurrentPath = function (path: string) {
+		currentPath.value = path
+		dcCache.setCache("currentPath", path)
+	}
+
+	// 获取专题详情
+	const getTopicDetail = async function (categoryId: number) {
+		const res: any = await reqGetTopicDetail(categoryId)
+		console.log(res)
+	}
+
 	return {
 		getBlogList,
 		blogList,
@@ -123,5 +138,7 @@ export const useHomeStore = defineStore("homeStore", () => {
 		changeCurrentCategory,
 		currentCategory,
 		currentPath,
+		changeCurrentPath,
+		getTopicDetail,
 	}
 })

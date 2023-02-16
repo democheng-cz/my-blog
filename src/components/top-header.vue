@@ -8,8 +8,11 @@
 				<li
 					v-for="item in list"
 					:key="item.id"
-					:class="{ active: activeIndex === item.id }"
-					@click="changeIndex(item.id, item.path)"
+					:class="{
+						active:
+							(currentPath || DcCache.getCache('currentPath')) === item.path,
+					}"
+					@click="changeIndex(item.path)"
 				>
 					<span>{{ item.name }}</span>
 				</li>
@@ -21,7 +24,11 @@
 <script lang="ts" setup>
 import { ref } from "vue"
 import { useRouter } from "vue-router"
+import { storeToRefs } from "pinia"
+import { useHomeStore } from "@/store/home"
+import DcCache from "@/utils/storage"
 
+const { currentPath } = storeToRefs(useHomeStore())
 const router = useRouter()
 const list = [
 	{ name: "博客", id: 1, path: "/home" },
@@ -31,11 +38,10 @@ const list = [
 	{ name: "留言板", id: 5, path: "/message" },
 ]
 
-const activeIndex = ref(1)
-const changeIndex = (index: number, path: string) => {
-	activeIndex.value = index
-
-	console.log(path)
+const changeIndex = (path: string) => {
+	// activePath.value = path
+	useHomeStore().changeCurrentPath(path)
+	// console.log(path)
 	// 跳转路由
 	router.push(path)
 }
