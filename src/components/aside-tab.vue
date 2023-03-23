@@ -1,32 +1,50 @@
 <template>
-	<div class="aside-tab-container">
-		<template v-for="item in data" :key="item.title">
-			<aside-tab-header :title="item.title" />
-			<template v-for="i in item.data" :key="i.categoryId">
-				<aside-tab-item :item="i"></aside-tab-item>
-			</template>
+	<div class="aside-tab-container pl-5 pr-5 mb-5 pb-5">
+		<aside-tab-header :title="title" />
+		<template v-for="item in newData" :key="item.user_id">
+			<aside-tab-item :name="name" :item="item"></aside-tab-item>
 		</template>
 	</div>
 </template>
 
 <script lang="ts" setup>
+import { watchEffect, ref } from "vue"
 import asideTabItem from "./aside-tab-item.vue"
 import asideTabHeader from "./aside-tab-header.vue"
 
+import dcCache from "@/utils/storage"
+
 interface PropsType {
 	data: any[]
+	title: string
+	name: string
 }
-withDefaults(defineProps<PropsType>(), {
+const props = withDefaults(defineProps<PropsType>(), {
 	data: () => [],
 })
+const newData = ref<any>([])
+if (props.data) {
+	newData.value = [...props.data]
+}
+
+// watchEffect(() => {
+// 	switch (props.name) {
+// 		case "user":
+// 			newData.value = props.data || dcCache.getCache("asideUserList")
+// 			break
+// 		case "hotBlog":
+// 			newData.value = props.data || dcCache.getCache("asideHotBlogList")
+// 			// console.log(dcCache.getCache("asideHotBlogList"))
+// 			break
+// 	}
+// })
 </script>
 
 <style scoped lang="less">
 .aside-tab-container {
-	height: 100%;
+	width: 100%;
 	background-color: #fff;
 	margin-left: 10px;
-	padding: 0 10px;
 	overflow: hidden;
 }
 </style>

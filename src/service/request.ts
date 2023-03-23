@@ -10,10 +10,9 @@ class DcRequest {
 	instance: AxiosInstance
 	constructor() {
 		this.instance = axios.create({
-			baseURL: "",
+			baseURL: "/api/view",
 			timeout: 20000,
 		})
-
 		this.instance.interceptors.request.use(
 			(config: any) => {
 				return config
@@ -25,7 +24,7 @@ class DcRequest {
 
 		this.instance.interceptors.response.use(
 			(res: AxiosResponse) => {
-				return res.data.data
+				return res.data
 			},
 			(err: any) => {
 				return Promise.reject(err)

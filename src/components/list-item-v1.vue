@@ -1,6 +1,6 @@
 <template>
 	<div class="list-item-v1">
-		<div class="left" v-if="item.cover">
+		<div class="left">
 			<img class="cover" :src="item.cover" alt="" />
 		</div>
 		<div class="right">
@@ -8,13 +8,13 @@
 				{{ item.title }}
 			</div>
 			<div class="desc">
-				{{ item.summary }}
+				{{ item.desc }}
 			</div>
 			<div class="info">
-				<div class="time">{{ item.lastUpdateTime }}</div>
+				<div class="time">{{ timeFormat(item.update_time) }}</div>
 				<div class="user">
 					<span>作者:</span>
-					<a class="name" href="#">{{ item.nickname }}</a>
+					<a class="name" href="#">{{ item.user_name || "佚名" }}</a>
 				</div>
 				<div class="category">
 					<span>分类专栏:</span>
@@ -26,6 +26,7 @@
 </template>
 
 <script lang="ts" setup>
+import { timeFormat } from "@/utils/timeFormat"
 const props = withDefaults(
 	defineProps<{
 		item: any
@@ -56,6 +57,7 @@ const getBlogDetail = function (blogId: string) {
 			width: 110px;
 			height: 110px;
 			border-radius: 5px;
+			object-fit: cover;
 		}
 	}
 	.right {

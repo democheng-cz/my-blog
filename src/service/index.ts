@@ -3,52 +3,30 @@ import request from "./request"
 // 获取博客列表
 export const reqGetBlogList = (
 	pageNo?: number,
-	categoryId?: null | string,
+	category_id?: null | string,
 	pageSize = 10
 ) =>
 	request.get({
-		url: "/api/view/loadBlogList",
-		params: { pageSize, pageNo, categoryId },
+		url: "/blog",
+		params: { pageSize, pageNo, category_id },
 	})
 
-// 获取专题分类
-export const reqGetCategory = () => {
-	return request.get({
-		url: "/api/view/loadCategory",
-		params: { pageSize: 10 },
+// 获取热门blog
+export const reqGetHotBlogList = (pageSize = 10) =>
+	request.get({
+		url: "/hotblog",
+		params: { pageSize },
 	})
-}
-
-// 获取专题详情
-export const reqGetTopicDetail = (categoryId: number) => {
-	return request.get({
-		url: "/api/view/getSpecialDetail",
-		params: { categoryId },
-	})
-}
 
 //获取博客成员
 export const reqGetUsers = () => {
 	return request.get({
-		url: "/api/view/loadTeamUser",
+		url: "/user",
 		params: { pageSize: 10 },
 	})
 }
 
-// 获取专题列表
-export const reqGetTopicList = () => {
-	return request.get({
-		url: "/api/view/loadSpecial",
-		params: { pageNo: 1, pageSize: 15 },
-	})
-}
-
-// 获取系统信息
-export const reqGetSysInfo = () => {
-	return request.get({ url: "/api/view/getSysInfo" })
-}
-
 // 获取博客详情
-export const reqBlogDetail = (blogId: string) => {
-	return request.get({ url: "/api/view/getBlogDetail", params: { blogId } })
+export const reqBlogDetail = (blog_id: string) => {
+	return request.get({ url: "/blog/detail/:blog_id", params: { blog_id } })
 }

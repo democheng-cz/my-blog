@@ -1,7 +1,10 @@
 <template>
 	<div class="blog-detail-container">
-		<template v-if="blogDetail">
-			<v-md-preview :text="blogDetail.content" mode="preview"></v-md-preview>
+		<template v-if="currentBlogDetail">
+			<v-md-preview
+				:text="currentBlogDetail.content"
+				mode="preview"
+			></v-md-preview>
 		</template>
 		<!-- <v-md-preview
 			:text="blogDetail.markdownContent"
@@ -17,8 +20,7 @@ import { storeToRefs } from "pinia"
 import { useBlogDetail } from "@/store/blogDetail"
 import DcCache from "@/utils/storage"
 // import RM from  "../../assets/read.md"
-const rm = import.meta.glob("../../assets/read.md", { as: "raw" })
-const text = ref<string>("")
+// const rm = import.meta.glob("../../assets/read.md", { as: "raw" })
 // async function foo() {
 // 	const res = await rm["../../assets/read.md"]()
 // 	text.value = res
@@ -26,8 +28,9 @@ const text = ref<string>("")
 // }
 // foo()
 
-const { blogDetail } = storeToRefs(useBlogDetail())
-blogDetail.value = blogDetail.value || DcCache.getCache("currentBlogDetail")
+const { currentBlogDetail } = storeToRefs(useBlogDetail())
+currentBlogDetail.value =
+	currentBlogDetail.value || DcCache.getCache("currentBlogDetail")
 </script>
 
 <style scoped lang="less">

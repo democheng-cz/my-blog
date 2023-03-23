@@ -14,6 +14,8 @@ import "@kangc/v-md-editor/lib/theme/style/github.css"
 import VMdPreview from "@kangc/v-md-editor/lib/preview"
 import hljs from "highlight.js"
 
+import "@/assets/css/tailwindcss.css"
+
 VMdPreview.use(githubTheme, {
 	Hljs: hljs,
 })

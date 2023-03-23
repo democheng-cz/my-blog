@@ -27,10 +27,12 @@ export default defineConfig({
 	},
 	server: {
 		proxy: {
-			"^/api": {
-				target: "http://localhost:8081",
+			"/api": {
+				target: "http://localhost:8888",
 				changeOrigin: true,
-				// rewrite: { "/": "/api" },
+				rewrite: path => {
+					return path.replace(/^\/api/, "")
+				},
 			},
 		},
 	},

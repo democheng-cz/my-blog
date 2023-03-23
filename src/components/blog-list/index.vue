@@ -5,16 +5,16 @@
 				v-for="item in blogList"
 				:key="item.categoryId"
 				:item="item"
-				@handle-get-blog-detail="getBlogDetailByID"
+				@handle-get-blog-detail="getBlogDetailByID(item)"
 			></list-item-v1>
 		</template>
-		<div class="pagination">
+		<!-- <div class="pagination">
 			<el-pagination
 				:total="blogTotal + 10"
 				layout="prev, pager, next"
 				@current-change="changePage"
 			/>
-		</div>
+		</div> -->
 	</div>
 </template>
 
@@ -25,15 +25,14 @@ import listItemV1 from "@/components/list-item-v1.vue"
 import { useBlogDetail } from "@/store/blogDetail"
 import { useHomeStore } from "@/store/home"
 
-const { blogDetail } = storeToRefs(useBlogDetail())
+// const { blogDetail } = storeToRefs(useBlogDetail())
 const router = useRouter()
 
 const props = defineProps<{
 	blogList: any[]
-	blogTotal: number
 }>()
 
-console.log(props.blogList)
+// console.log(props.blogList)
 // 当页码改变是
 const changePage = function (newPage: number) {
 	// console.log(newPage)
@@ -41,12 +40,10 @@ const changePage = function (newPage: number) {
 }
 
 // 通过blogID获取博客的详情
-const getBlogDetailByID = function (id: string) {
-	console.log(id)
-	useBlogDetail().getBlogDetail(id)
-	if (blogDetail) {
-		router.push(`/blog/${id}`)
-	}
+const getBlogDetailByID = function (item: any) {
+	useBlogDetail().getCurrentBlogDetail(item)
+	useHomeStore().changeCurrentPath("/blog")
+	router.push(`/blog/${item.blog_id}`)
 }
 </script>
 

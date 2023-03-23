@@ -1,6 +1,6 @@
 <template>
 	<div class="header">
-		<div class="name">{{ title }}</div>
+		<div class="name font-medium">{{ title }}</div>
 		<div class="more">更多>></div>
 	</div>
 </template>

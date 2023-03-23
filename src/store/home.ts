@@ -4,111 +4,70 @@ import type { BlogItemType, CategoryItemType, TopicItemType } from "./types"
 import dcCache from "@/utils/storage"
 import {
 	reqGetBlogList,
-	reqGetCategory,
-	reqGetTopicList,
-	reqGetTopicDetail,
+	reqGetUsers,
+	reqGetHotBlogList,
+	reqBlogDetail,
 } from "@/service/index"
 
 export const useHomeStore = defineStore("homeStore", () => {
 	// 博客列表数据
 	const blogList = ref<Array<BlogItemType>>([])
-	// 博客列表总数量
-	const blogTotal = ref<number>(0)
-
 	const pageNo = ref<number>(1)
 
-	// 侧边栏数据
-	const asideData = ref<Array<any>>([])
+	// 侧边栏数据(用户列表)
+	const asideUserList = ref<Array<any>>([])
+
+	// 侧边栏数据(热门文章列表)
+	const asideHotBlogList = ref<Array<any>>([])
 
 	// 专栏分类列表
 	const categoryList = ref<Array<CategoryItemType>>([])
 
-	// 专题列表
-	const topicList = ref<Array<TopicItemType>>([])
-
-	// 当前选中的专栏分类
-	const currentCategory: any = ref(null)
-
 	// 当前路由路径
 	const currentPath = ref<string>("")
-
-	const currentTopicDetail = ref<any>([])
 
 	// 获取博客列表
 	const getBlogList = async function (
 		// pageNo?: number,
-		categoryId?: null | string
+		category_id?: null | string
 	) {
-		const res: any = await reqGetBlogList(pageNo.value, categoryId)
-		blogList.value = new Array(10).fill(res.list[0])
-		// blogList.value = res.list
-		blogTotal.value = res.totalCount
-		dcCache.setCache("blogList", blogList.value)
-		dcCache.setCache("blogTotal", blogTotal.value)
-	}
-
-	// 获取专栏分类列表
-	const getCategoryList = async function () {
-		const resCategory: any = await reqGetCategory()
-		// console.log(resCategory)
-		categoryList.value = new Array(10).fill(resCategory[0])
-		getAllAsideData(categoryList.value)
-		dcCache.setCache("categoryList", categoryList.value)
+		const res: any = await reqGetBlogList(pageNo.value, category_id)
+		blogList.value = res.result.data
+		// dcCache.setCache("blogList", blogList.value)
 		// dcCache.setCache("blogTotal", blogTotal.value)
 	}
 
-	// 获取专题列表
-	const getTopicList = async function () {
-		// 获取专题列表
-		const resTopic: any = await reqGetTopicList()
-		// console.log(resTopic)
-		topicList.value = new Array(10).fill(resTopic.list[0])
+	// 获取热门blog
+	const getHotBlogList = async function () {
+		const res: any = await reqGetHotBlogList()
+		asideHotBlogList.value = res.result.data
+		dcCache.setCache("asideHotBlogList", res.result.data)
+	}
+
+	// 获取专栏分类列表
+	// const getCategoryList = async function () {
+	// 	const resCategory: any = await reqGetCategory()
+	// 	// console.log(resCategory)
+	// 	categoryList.value = new Array(10).fill(resCategory[0])
+	// 	getAllAsideData(categoryList.value)
+	// 	dcCache.setCache("categoryList", categoryList.value)
+	// 	// dcCache.setCache("blogTotal", blogTotal.value)
+	// }
+
+	// 获取所有的用户
+	const getUser = async function () {
+		const res: any = await reqGetUsers()
+		if (res.status === 200) {
+			asideUserList.value = res.result.data
+			dcCache.setCache("asideUserList", asideUserList.value)
+		}
 	}
 
 	// 获取所有数据
 	const getAllData = async function () {
 		await getBlogList()
-		await getCategoryList()
-		await getTopicList()
-		// asideData
-		getAllAsideData(categoryList.value, topicList.value)
-	}
-
-	const getAllAsideData = function (
-		categoryList: any[],
-		topicList?: any,
-		userList?: any
-	) {
-		// console.log("first")
-		asideData.value = []
-		if (categoryList) {
-			asideData.value.push({
-				title: "专栏分类",
-				data: categoryList.slice(0, 5),
-			})
-		}
-		if (userList) {
-			asideData.value.push({ title: "博客成员", data: userList.slice(0, 5) })
-		}
-		if (topicList) {
-			asideData.value.push({ title: "专题", data: topicList.slice(0, 5) })
-		}
-		dcCache.setCache("asideData", asideData.value)
-	}
-
-	// 修改当前页数
-	const changePageNo = function (newPage: number) {
-		pageNo.value = newPage
-		getBlogList()
-	}
-
-	// 修改currentCategory
-	const changeCurrentCategory = async function (item: any) {
-		currentCategory.value = item
-		// console.log(item)
-		// console.log(item.categoryId)
-		dcCache.setCache("currentCategory", currentCategory.value)
-		await getBlogList(item.categoryId)
+		await getUser()
+		await getHotBlogList()
 	}
 
 	// 保存并修改currentPath
@@ -117,28 +76,27 @@ export const useHomeStore = defineStore("homeStore", () => {
 		dcCache.setCache("currentPath", path)
 	}
 
-	// 获取专题详情
-	const getTopicDetail = async function (categoryId: number) {
-		const res: any = await reqGetTopicDetail(categoryId)
-		console.log(res)
+	// 持久化当前需要展示的blog
+	const saveCurrentBlogInfo = function (blogInfo: any) {
+		dcCache.setCache("currentBlog", blogInfo)
+	}
+
+	// 持久化当前需要展示的user
+	const saveCurrentUser = function (user: any) {
+		dcCache.setCache("currentUser", user)
 	}
 
 	return {
 		getBlogList,
 		blogList,
-		blogTotal,
-		changePageNo,
 		categoryList,
-		topicList,
-		getAllAsideData,
-		asideData,
-		getCategoryList,
-		getTopicList,
+		asideUserList,
 		getAllData,
-		changeCurrentCategory,
-		currentCategory,
 		currentPath,
 		changeCurrentPath,
-		getTopicDetail,
+		getHotBlogList,
+		asideHotBlogList,
+		saveCurrentBlogInfo,
+		saveCurrentUser,
 	}
 })
