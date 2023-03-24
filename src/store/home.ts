@@ -1,7 +1,7 @@
 import { defineStore } from "pinia"
 import { ref } from "vue"
 import type { BlogItemType, CategoryItemType, TopicItemType } from "./types"
-import dcCache from "@/utils/storage"
+import { dcCache } from "@/utils/storage"
 import {
 	reqGetBlogList,
 	reqGetUsers,
@@ -13,6 +13,7 @@ export const useHomeStore = defineStore("homeStore", () => {
 	// 博客列表数据
 	const blogList = ref<Array<BlogItemType>>([])
 	const pageNo = ref<number>(1)
+	const blogListCount = ref<number>(0)
 
 	// 侧边栏数据(用户列表)
 	const asideUserList = ref<Array<any>>([])
@@ -31,28 +32,23 @@ export const useHomeStore = defineStore("homeStore", () => {
 		// pageNo?: number,
 		category_id?: null | string
 	) {
-		const res: any = await reqGetBlogList(pageNo.value, category_id)
-		blogList.value = res.result.data
-		// dcCache.setCache("blogList", blogList.value)
-		// dcCache.setCache("blogTotal", blogTotal.value)
+		if (
+			blogListCount.value === 0 ||
+			blogList.value.length < blogListCount.value
+		) {
+			const res: any = await reqGetBlogList(blogList.value.length, category_id)
+			blogList.value.push(...res.result.data)
+			blogListCount.value = res.result.total
+			// console.log(res.result.data)
+		}
 	}
 
 	// 获取热门blog
 	const getHotBlogList = async function () {
 		const res: any = await reqGetHotBlogList()
-		asideHotBlogList.value = res.result.data
-		dcCache.setCache("asideHotBlogList", res.result.data)
+		asideHotBlogList.value = res.result.data.splice(0, 5)
+		dcCache.setCache("asideHotBlogList", asideHotBlogList.value)
 	}
-
-	// 获取专栏分类列表
-	// const getCategoryList = async function () {
-	// 	const resCategory: any = await reqGetCategory()
-	// 	// console.log(resCategory)
-	// 	categoryList.value = new Array(10).fill(resCategory[0])
-	// 	getAllAsideData(categoryList.value)
-	// 	dcCache.setCache("categoryList", categoryList.value)
-	// 	// dcCache.setCache("blogTotal", blogTotal.value)
-	// }
 
 	// 获取所有的用户
 	const getUser = async function () {
@@ -98,5 +94,7 @@ export const useHomeStore = defineStore("homeStore", () => {
 		asideHotBlogList,
 		saveCurrentBlogInfo,
 		saveCurrentUser,
+		blogListCount,
+		getUser,
 	}
 })

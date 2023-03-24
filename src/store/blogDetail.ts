@@ -1,7 +1,7 @@
 import { defineStore } from "pinia"
 import { ref } from "vue"
 import { reqBlogDetail } from "@/service"
-import DcCache from "@/utils/storage"
+import { dcCache } from "@/utils/storage"
 export const useBlogDetail = defineStore("blogDetail", function () {
 	// 博客详情
 	const currentBlogDetail: any = ref<any>(null)
@@ -10,7 +10,7 @@ export const useBlogDetail = defineStore("blogDetail", function () {
 	const getCurrentBlogDetail = async function (blog: any) {
 		try {
 			currentBlogDetail.value = blog
-			DcCache.setCache("currentBlogDetail", blog)
+			dcCache.setCache("currentBlogDetail", blog)
 		} catch (error) {
 			console.log(error)
 		}

@@ -13,4 +13,4 @@ class DcCache {
 	}
 }
 
-export default new DcCache()
+export const dcCache = new DcCache()

@@ -18,6 +18,7 @@ declare module '@vue/runtime-core' {
     Footer: typeof import('./src/components/Footer.vue')['default']
     ListItemV1: typeof import('./src/components/list-item-v1.vue')['default']
     ListItemV2: typeof import('./src/components/list-item-v2.vue')['default']
+    LoadingV1: typeof import('./src/components/loading-v1.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TopHeader: typeof import('./src/components/top-header.vue')['default']

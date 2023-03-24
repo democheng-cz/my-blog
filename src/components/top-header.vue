@@ -10,7 +10,7 @@
 					:key="item.id"
 					:class="{
 						active:
-							(currentPath || DcCache.getCache('currentPath')) === item.path,
+							(currentPath || dcCache.getCache('currentPath')) === item.path,
 					}"
 					@click="changeIndex(item.path)"
 				>
@@ -26,7 +26,7 @@ import { ref } from "vue"
 import { useRouter } from "vue-router"
 import { storeToRefs } from "pinia"
 import { useHomeStore } from "@/store/home"
-import DcCache from "@/utils/storage"
+import { dcCache } from "@/utils/storage"
 
 const { currentPath } = storeToRefs(useHomeStore())
 const router = useRouter()

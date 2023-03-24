@@ -1,7 +1,11 @@
 <template>
 	<div class="aside-tab-item" @click="handleEnterDetail()">
 		<div class="left">
-			<img :src="item.avatar || item.cover" alt="" />
+			<img
+				:src="item.avatar || item.cover || defaultImg"
+				alt=""
+				@error="handleError"
+			/>
 			<div class="name text-xs ml-2">{{ item.nick_name || item.title }}</div>
 		</div>
 		<div class="right" v-if="item.blogCount">{{ item.blogCount || "" }}篇</div>
@@ -9,17 +13,14 @@
 </template>
 
 <script lang="ts" setup>
-import { watchEffect } from "vue"
 import { useRouter } from "vue-router"
-import { storeToRefs } from "pinia"
 
 import { useHomeStore } from "@/store/home"
 
 import { useBlogDetail } from "@/store/blogDetail"
+import defaultImg from "@/assets/images/猫和老鼠.png"
 
 const router = useRouter()
-
-const { currentBlogDetail } = storeToRefs(useBlogDetail())
 
 const props = withDefaults(
 	defineProps<{
@@ -43,6 +44,10 @@ const handleEnterDetail = () => {
 			useHomeStore().changeCurrentPath("/blog")
 			router.push(`/blog/${props.item.blog_id}`)
 	}
+}
+
+const handleError = (e: any) => {
+	e.target.src = defaultImg
 }
 </script>
 

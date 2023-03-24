@@ -2,13 +2,13 @@ import request from "./request"
 
 // 获取博客列表
 export const reqGetBlogList = (
-	pageNo?: number,
+	count: number,
 	category_id?: null | string,
 	pageSize = 10
 ) =>
 	request.get({
 		url: "/blog",
-		params: { pageSize, pageNo, category_id },
+		params: { pageSize, category_id, count },
 	})
 
 // 获取热门blog

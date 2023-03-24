@@ -18,7 +18,7 @@
 import { ref } from "vue"
 import { storeToRefs } from "pinia"
 import { useBlogDetail } from "@/store/blogDetail"
-import DcCache from "@/utils/storage"
+import { dcCache } from "@/utils/storage"
 // import RM from  "../../assets/read.md"
 // const rm = import.meta.glob("../../assets/read.md", { as: "raw" })
 // async function foo() {
@@ -30,7 +30,7 @@ import DcCache from "@/utils/storage"
 
 const { currentBlogDetail } = storeToRefs(useBlogDetail())
 currentBlogDetail.value =
-	currentBlogDetail.value || DcCache.getCache("currentBlogDetail")
+	currentBlogDetail.value || dcCache.getCache("currentBlogDetail")
 </script>
 
 <style scoped lang="less">

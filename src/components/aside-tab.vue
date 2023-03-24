@@ -12,7 +12,7 @@ import { watchEffect, ref } from "vue"
 import asideTabItem from "./aside-tab-item.vue"
 import asideTabHeader from "./aside-tab-header.vue"
 
-import dcCache from "@/utils/storage"
+import { dcCache } from "@/utils/storage"
 
 interface PropsType {
 	data: any[]

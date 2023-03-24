@@ -1,11 +1,11 @@
 <template>
-	<div class="user-container flex-col">
+	<div class="user-container flex-col md:items-center">
 		<template v-for="item in users">
-			<div class="item mb-10 flex">
+			<div class="item mb-10 flex md:flex-col items-center">
 				<div class="avatar">
 					<img :src="item.avatar" alt="" class="object-cover" />
 				</div>
-				<div class="info">
+				<div class="info md:flex flex-col items-center">
 					<div class="nickname">{{ item.nick_name }}</div>
 					<div class="profession">职位: 前端程序员</div>
 					<div class="introduce">
@@ -26,7 +26,7 @@
 <script lang="ts" setup>
 import { onUnmounted, ref, watch } from "vue"
 import { useRoute } from "vue-router"
-import dcCache from "@/utils/storage"
+import { dcCache } from "@/utils/storage"
 
 const route = useRoute()
 const users = ref<any>()
@@ -62,12 +62,13 @@ watch(
 	padding: 15px;
 
 	.avatar {
-		width: 200px;
-		height: 200px;
+		width: 13.1579vw;
+		height: 13.1579vw;
 		margin-right: 20px;
 		img {
-			width: 200px;
-			height: 200px;
+			width: 13.1579vw;
+			height: 13.1579vw;
+			object-fit: cover;
 			border-radius: 50%;
 		}
 	}
@@ -88,7 +89,7 @@ watch(
 			font-size: 14px;
 		}
 		.introduce {
-			text-indent: 2em;
+			text-indent: 1em;
 			font-size: 14px;
 			P {
 				line-height: 20px;

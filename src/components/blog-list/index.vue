@@ -8,13 +8,6 @@
 				@handle-get-blog-detail="getBlogDetailByID(item)"
 			></list-item-v1>
 		</template>
-		<!-- <div class="pagination">
-			<el-pagination
-				:total="blogTotal + 10"
-				layout="prev, pager, next"
-				@current-change="changePage"
-			/>
-		</div> -->
 	</div>
 </template>
 
@@ -25,19 +18,11 @@ import listItemV1 from "@/components/list-item-v1.vue"
 import { useBlogDetail } from "@/store/blogDetail"
 import { useHomeStore } from "@/store/home"
 
-// const { blogDetail } = storeToRefs(useBlogDetail())
 const router = useRouter()
 
 const props = defineProps<{
 	blogList: any[]
 }>()
-
-// console.log(props.blogList)
-// 当页码改变是
-const changePage = function (newPage: number) {
-	// console.log(newPage)
-	useHomeStore().getBlogList()
-}
 
 // 通过blogID获取博客的详情
 const getBlogDetailByID = function (item: any) {

@@ -29,8 +29,7 @@ const app = createApp(App)
 
 app.use(VMdPreviewHtml)
 app.use(VMdPreview)
-
-app.use(router)
 app.use(pinia)
+app.use(router)
 
 app.mount("#app")
